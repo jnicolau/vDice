@@ -331,8 +331,7 @@ contract Dice is usingOraclize {
             bytes32 myid = oraclize_query("URL", "json(https://api.random.org/json-rpc/1/invoke).result.random.data.0","BBX1PCQ9134839wTz10OWxXCaZaGk92yF6TES8xA+8IC7xNBlJq5AL0uW3rev7IoApA5DMFmCfKGikjnNbNglKKvwjENYPB8TBJN9tDgdcYNxdWnsYARKMqmjrJKYbBAiws+UU6HrJXUWirO+dBSSJbmjIg+9vmBjSq8KveiBzSGmuQhu7/hSg5rSsSP/r+MhR/Q5ECrOHi+CkP/qdSUTA/QhCCjdzFu+7t3Hs7NU34a+l7JdvDlvD8hoNxyKooMDYNbUA8/eFmPv2d538FN6KJQp+RKr4w4VtAMHdejrLM=", ORACLIZE_GAS_LIMIT + safeGas);
             bets[myid] = Bet(msg.sender, betValue, 0);
             betsKeys.push(myid);
-        }
-        else {
+        } else {
             throw;
         }
     }
@@ -343,192 +342,192 @@ contract Dice is usingOraclize {
         onlyIfValidRoll(myid, result)
         onlyIfBetSizeIsStillCorrect(myid)  {
 
-        Bet thisBet = bets[myid];
-        uint numberRolled = parseInt(result);
-        bets[myid].numberRolled = numberRolled;
-        isWinningBet(thisBet, numberRolled);
-        isLosingBet(thisBet, numberRolled);
-        amountWagered += thisBet.amountBetted;
-        delete profitDistributed;
+        // Bet thisBet = bets[myid];
+        // uint numberRolled = parseInt(result);
+        // bets[myid].numberRolled = numberRolled;
+        // isWinningBet(thisBet, numberRolled);
+        // isLosingBet(thisBet, numberRolled);
+        // amountWagered += thisBet.amountBetted;
+        // delete profitDistributed;
     }
 
-    function isWinningBet(Bet thisBet, uint numberRolled) private onlyWinningBets(numberRolled) {
-        uint winAmount = (thisBet.amountBetted * (10000 - edge)) / pwin;
-        BetWon(thisBet.playerAddress, numberRolled, winAmount);
-        safeSend(thisBet.playerAddress, winAmount);
-        investorsLoses += (winAmount - thisBet.amountBetted);
-    }
+    // function isWinningBet(Bet thisBet, uint numberRolled) private onlyWinningBets(numberRolled) {
+    //     uint winAmount = (thisBet.amountBetted * (10000 - edge)) / pwin;
+    //     BetWon(thisBet.playerAddress, numberRolled, winAmount);
+    //     safeSend(thisBet.playerAddress, winAmount);
+    //     investorsLoses += (winAmount - thisBet.amountBetted);
+    // }
 
-    function isLosingBet(Bet thisBet, uint numberRolled) private onlyLosingBets(numberRolled) {
-        BetLost(thisBet.playerAddress, numberRolled);
-        safeSend(thisBet.playerAddress, 1);
-        investorsProfit += (thisBet.amountBetted - 1)*(10000 - houseEdge)/10000;
-        uint houseProfit = (thisBet.amountBetted - 1)*(houseEdge)/10000;
-        safeSend(houseAddress, houseProfit);
-    }
+    // function isLosingBet(Bet thisBet, uint numberRolled) private onlyLosingBets(numberRolled) {
+    //     BetLost(thisBet.playerAddress, numberRolled);
+    //     safeSend(thisBet.playerAddress, 1);
+    //     investorsProfit += (thisBet.amountBetted - 1)*(10000 - houseEdge)/10000;
+    //     uint houseProfit = (thisBet.amountBetted - 1)*(houseEdge)/10000;
+    //     safeSend(houseAddress, houseProfit);
+    // }
 
-    //SECTION III: INVEST & DIVEST
+    // //SECTION III: INVEST & DIVEST
 
-    function increaseInvestment() onlyIfNotStopped onlyMoreThanZero onlyInvestors  {
-        profitDistribution();
-        investors[investorIDs[msg.sender]].amountInvested += msg.value;
-        invested += msg.value;
-    }
+    // function increaseInvestment() onlyIfNotStopped onlyMoreThanZero onlyInvestors  {
+    //     profitDistribution();
+    //     investors[investorIDs[msg.sender]].amountInvested += msg.value;
+    //     invested += msg.value;
+    // }
 
-    function newInvestor()
-        onlyIfNotStopped
-        onlyMoreThanZero
-        onlyNotInvestors
-        onlyMoreThanMinInvestment {
+    // function newInvestor()
+    //     onlyIfNotStopped
+    //     onlyMoreThanZero
+    //     onlyNotInvestors
+    //     onlyMoreThanMinInvestment {
 
-        profitDistribution();
+    //     profitDistribution();
 
-        if (numInvestors == maxInvestors) {
-            uint smallestInvestorID = searchSmallestInvestor();
-            divest(investors[smallestInvestorID].investorAddress);
-        }
+    //     if (numInvestors == maxInvestors) {
+    //         uint smallestInvestorID = searchSmallestInvestor();
+    //         divest(investors[smallestInvestorID].investorAddress);
+    //     }
 
-        numInvestors++;
-        addInvestorAtID(numInvestors);
-    }
+    //     numInvestors++;
+    //     addInvestorAtID(numInvestors);
+    // }
 
-    function divest() onlyInvestors rejectValue {
-        divest(msg.sender);
-    }
+    // function divest() onlyInvestors rejectValue {
+    //     divest(msg.sender);
+    // }
 
 
-    function divest(address currentInvestor)
-        private
-        onlyIfInvestorBalanceIsPositive(currentInvestor) {
+    // function divest(address currentInvestor)
+    //     private
+    //     onlyIfInvestorBalanceIsPositive(currentInvestor) {
 
-        profitDistribution();
-        uint currentID = investorIDs[currentInvestor];
-        uint amountToReturn = getBalance(currentInvestor);
-        invested -= investors[currentID].amountInvested;
-        uint divestFeeAmount =  (amountToReturn*divestFee)/10000;
-        amountToReturn -= divestFeeAmount;
+    //     profitDistribution();
+    //     uint currentID = investorIDs[currentInvestor];
+    //     uint amountToReturn = getBalance(currentInvestor);
+    //     invested -= investors[currentID].amountInvested;
+    //     uint divestFeeAmount =  (amountToReturn*divestFee)/10000;
+    //     amountToReturn -= divestFeeAmount;
 
-        delete investors[currentID];
-        delete investorIDs[currentInvestor];
-        //Reorder investors
+    //     delete investors[currentID];
+    //     delete investorIDs[currentInvestor];
+    //     //Reorder investors
 
-        if (currentID != numInvestors) {
-            // Get last investor
-            Investor lastInvestor = investors[numInvestors];
-            //Set last investor ID to investorID of divesting account
-            investorIDs[lastInvestor.investorAddress] = currentID;
-            //Copy investor at the new position in the mapping
-            investors[currentID] = lastInvestor;
-            //Delete old position in the mappping
-            delete investors[numInvestors];
-        }
+    //     if (currentID != numInvestors) {
+    //         // Get last investor
+    //         Investor lastInvestor = investors[numInvestors];
+    //         //Set last investor ID to investorID of divesting account
+    //         investorIDs[lastInvestor.investorAddress] = currentID;
+    //         //Copy investor at the new position in the mapping
+    //         investors[currentID] = lastInvestor;
+    //         //Delete old position in the mappping
+    //         delete investors[numInvestors];
+    //     }
 
-        numInvestors--;
-        safeSend(currentInvestor, amountToReturn);
-        safeSend(houseAddress, divestFeeAmount);
-    }
+    //     numInvestors--;
+    //     safeSend(currentInvestor, amountToReturn);
+    //     safeSend(houseAddress, divestFeeAmount);
+    // }
 
-    function forceDivestOfAllInvestors() onlyOwner rejectValue {
-        uint copyNumInvestors = numInvestors;
-        for (uint i = 1; i <= copyNumInvestors; i++) {
-            divest(investors[1].investorAddress);
-        }
-    }
+    // function forceDivestOfAllInvestors() onlyOwner rejectValue {
+    //     uint copyNumInvestors = numInvestors;
+    //     for (uint i = 1; i <= copyNumInvestors; i++) {
+    //         divest(investors[1].investorAddress);
+    //     }
+    // }
 
-    /*
-    The owner can use this function to force the exit of an investor from the
-    contract during an emergency withdrawal in the following situations:
-        - Unresponsive investor
-        - Investor demanding to be paid in other to vote, the facto-blackmailing
-        other investors
-    */
-    function forceDivestOfOneInvestor(address currentInvestor)
-        onlyOwner
-        onlyIfStopped
-        rejectValue {
+    // /*
+    // The owner can use this function to force the exit of an investor from the
+    // contract during an emergency withdrawal in the following situations:
+    //     - Unresponsive investor
+    //     - Investor demanding to be paid in other to vote, the facto-blackmailing
+    //     other investors
+    // */
+    // function forceDivestOfOneInvestor(address currentInvestor)
+    //     onlyOwner
+    //     onlyIfStopped
+    //     rejectValue {
 
-        divest(currentInvestor);
-        //Resets emergency withdrawal proposal. Investors must vote again
-        delete proposedWithdrawal;
-    }
+    //     divest(currentInvestor);
+    //     //Resets emergency withdrawal proposal. Investors must vote again
+    //     delete proposedWithdrawal;
+    // }
 
-    //SECTION IV: CONTRACT MANAGEMENT
+    // //SECTION IV: CONTRACT MANAGEMENT
 
-    function stopContract() onlyOwner rejectValue {
-        isStopped = true;
-    }
+    // function stopContract() onlyOwner rejectValue {
+    //     isStopped = true;
+    // }
 
-    function resumeContract() onlyOwner rejectValue {
-        isStopped = false;
-    }
+    // function resumeContract() onlyOwner rejectValue {
+    //     isStopped = false;
+    // }
 
-    function changeHouseAddress(address newHouse) onlyOwner rejectValue {
-        houseAddress = newHouse;
-    }
+    // function changeHouseAddress(address newHouse) onlyOwner rejectValue {
+    //     houseAddress = newHouse;
+    // }
 
-    function changeOwnerAddress(address newOwner) onlyOwner rejectValue {
-        owner = newOwner;
-    }
+    // function changeOwnerAddress(address newOwner) onlyOwner rejectValue {
+    //     owner = newOwner;
+    // }
 
-    function changeGasLimitOfSafeSend(uint newGasLimit)
-        onlyOwner
-        onlyIfValidGas(newGasLimit)
-        rejectValue {
-        safeGas = newGasLimit;
-    }
+    // function changeGasLimitOfSafeSend(uint newGasLimit)
+    //     onlyOwner
+    //     onlyIfValidGas(newGasLimit)
+    //     rejectValue {
+    //     safeGas = newGasLimit;
+    // }
 
-    //SECTION V: EMERGENCY WITHDRAWAL
+    // //SECTION V: EMERGENCY WITHDRAWAL
 
-    function voteEmergencyWithdrawal(bool vote)
-        onlyInvestors
-        onlyAfterProposed
-        onlyIfStopped
-        rejectValue {
-        investors[investorIDs[msg.sender]].votedForEmergencyWithdrawal = vote;
-    }
+    // function voteEmergencyWithdrawal(bool vote)
+    //     onlyInvestors
+    //     onlyAfterProposed
+    //     onlyIfStopped
+    //     rejectValue {
+    //     investors[investorIDs[msg.sender]].votedForEmergencyWithdrawal = vote;
+    // }
 
-    function proposeEmergencyWithdrawal(address withdrawalAddress)
-        onlyIfStopped
-        onlyOwner
-        rejectValue {
+    // function proposeEmergencyWithdrawal(address withdrawalAddress)
+    //     onlyIfStopped
+    //     onlyOwner
+    //     rejectValue {
 
-        //Resets previous votes
-        for (uint i = 1; i <= numInvestors; i++) {
-            delete investors[i].votedForEmergencyWithdrawal;
-        }
+    //     //Resets previous votes
+    //     for (uint i = 1; i <= numInvestors; i++) {
+    //         delete investors[i].votedForEmergencyWithdrawal;
+    //     }
 
-        proposedWithdrawal = WithdrawalProposal(withdrawalAddress, now);
-        EmergencyWithdrawalProposed();
-    }
+    //     proposedWithdrawal = WithdrawalProposal(withdrawalAddress, now);
+    //     EmergencyWithdrawalProposed();
+    // }
 
-    function executeEmergencyWithdrawal()
-        onlyOwner
-        onlyAfterProposed
-        onlyIfStopped
-        onlyIfEmergencyTimeOutHasPassed
-        rejectValue {
+    // function executeEmergencyWithdrawal()
+    //     onlyOwner
+    //     onlyAfterProposed
+    //     onlyIfStopped
+    //     onlyIfEmergencyTimeOutHasPassed
+    //     rejectValue {
 
-        uint numOfVotesInFavour;
-        uint amountToWithdrawal = this.balance;
+    //     uint numOfVotesInFavour;
+    //     uint amountToWithdrawal = this.balance;
 
-        for (uint i = 1; i <= numInvestors; i++) {
-            if (investors[i].votedForEmergencyWithdrawal == true) {
-                numOfVotesInFavour++;
-                delete investors[i].votedForEmergencyWithdrawal;
-            }
-        }
+    //     for (uint i = 1; i <= numInvestors; i++) {
+    //         if (investors[i].votedForEmergencyWithdrawal == true) {
+    //             numOfVotesInFavour++;
+    //             delete investors[i].votedForEmergencyWithdrawal;
+    //         }
+    //     }
 
-        if (numOfVotesInFavour >= emergencyWithdrawalRatio * numInvestors / 100) {
-            if (!proposedWithdrawal.toAddress.send(this.balance)) {
-                EmergencyWithdrawalFailed(proposedWithdrawal.toAddress);
-            }
-            else {
-                EmergencyWithdrawalSucceeded(proposedWithdrawal.toAddress, amountToWithdrawal);
-            }
-        }
-        else {
-            throw;
-        }
-    }
+    //     if (numOfVotesInFavour >= emergencyWithdrawalRatio * numInvestors / 100) {
+    //         if (!proposedWithdrawal.toAddress.send(this.balance)) {
+    //             EmergencyWithdrawalFailed(proposedWithdrawal.toAddress);
+    //         }
+    //         else {
+    //             EmergencyWithdrawalSucceeded(proposedWithdrawal.toAddress, amountToWithdrawal);
+    //         }
+    //     }
+    //     else {
+    //         throw;
+    //     }
+    // }
 
 }
