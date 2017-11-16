@@ -1,11 +1,26 @@
+//https://truffle.readthedocs.io/en/beta/getting_started/contracts/
+
 var Dice = artifacts.require("./Dice.sol");
 
 contract('Dice', function(accounts) {
   it("test access to balance", function() {
     return Dice.deployed().then(function(instance) {
-      return instance.getBalance(accounts[0]);
-    }).then(function(balance) {
-      assert.equal(balance.valueOf(), 10000, "10000 wasn't in the first account");
+      // Contract details
+      //console.log(instance);
+      
+      console.log("Account 0 Balance: " + web3.eth.getBalance(accounts[0]));
+      console.log("Account 1 Balance: " + web3.eth.getBalance(accounts[1]));
+      console.log("Account 2 Balance: " + web3.eth.getBalance(accounts[2]));
+      //instance.deposit(myData, {value: 100, from: myAccount});
+      instance.newInvestor({value: 100, from: accounts[1]}).then(function() {
+        console.log("Created new investor" + value);
+        instance.getMaxBetAmount.call().then(function(value){
+          console.log("Max Bet Amount:" + value);
+        });  
+      });
+      return null;
+    }).then(function(value) {
+      //assert.equal(value.valueOf(), 10000, "10000 wasn't in the first account");
     });
   });
   // it("should call a function that depends on a linked library", function() {
