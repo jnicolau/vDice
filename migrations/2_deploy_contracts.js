@@ -4,11 +4,6 @@ var VDice = artifacts.require("./Dice");
 //var MetaCoin = artifacts.require("./MetaCoin.sol");
 
 module.exports = function(deployer) {
-  // deployer.deploy(ConvertLib);
-  // deployer.link(ConvertLib, MetaCoin);
-  // deployer.deploy(MetaCoin);
-  //deployer.deploy(oraclizeI);
-  ///deployer.link(oraclizeI, vDice);
 
   var pwin = 5000; // probability of winning (10000 = 100%)
   var edge = 200; // edge percentage (10000 = 100%)
@@ -19,8 +14,9 @@ module.exports = function(deployer) {
   var divestFee = 50; //divest fee percentage (10000 = 100%)
   var emergencyWithdrawalRatio = 90; //ratio percentage (100 = 100%)
   
+  // Convert min bet from finneys to weis
   var minBetInWei = web3.toWei(minBet, "finney");
 
   deployer.deploy(VDice, pwin, edge, minBetInWei, maxWin, minBet, 
-    maxInvestors, houseEdge, divestFee, emergencyWithdrawalRatio); // {gas: 900000000000}
+    maxInvestors, houseEdge, divestFee, emergencyWithdrawalRatio, {gas: 6000000}); // {gas: 900000000000}
 };
