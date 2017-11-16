@@ -1,4 +1,12 @@
 //https://truffle.readthedocs.io/en/beta/getting_started/contracts/
+//https://github.com/trufflesuite/truffle-contract
+//https://ethereum.stackexchange.com/questions/29449/how-to-pass-argument-parameter-to-a-payable-function-of-a-contract-that-has-been
+// MyContract.defaults({
+//   from: ...,
+//   gas: ...,
+//   gasPrice: ...,
+//   value: ...
+// })
 
 var Dice = artifacts.require("./Dice.sol");
 
