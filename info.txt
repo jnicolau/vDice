@@ -2,7 +2,7 @@
 testrpc --mnemonic "case meadow shuffle purpose renew echo before correct rate artist seed net" -a 50
 
 /* Command Prompt 2 */
-cd "C:\Code\vDice\ethereum-bridge"
+cd "C:\Code\ethereum-bridge"
 node bridge -a 49
 
 /* Command Prompt 3 - Windows */
