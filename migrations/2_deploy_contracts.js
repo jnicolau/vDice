@@ -1,7 +1,8 @@
-var VDice = artifacts.require("./Dice");
 //var oraclizeI = artifacts.require("./OraclizeI");
 //var ConvertLib = artifacts.require("./ConvertLib.sol");
 //var MetaCoin = artifacts.require("./MetaCoin.sol");
+
+var VDice = artifacts.require("./Dice");
 
 module.exports = function(deployer) {
 
