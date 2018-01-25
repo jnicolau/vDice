@@ -11,7 +11,8 @@ In order to run it you'll need:
 The commands below will help you launch it. You need to have multiple services running at the same time.
 
 /* Command Prompt 1 */
-testrpc --mnemonic "case meadow shuffle purpose renew echo before correct rate artist seed net" -a 50
+
+`testrpc --mnemonic "case meadow shuffle purpose renew echo before correct rate artist seed net" -a 50`
 
 /* Command Prompt 2 */
 
