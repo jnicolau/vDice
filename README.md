@@ -14,14 +14,17 @@ The commands below will help you launch it. You need to have multiple services r
 testrpc --mnemonic "case meadow shuffle purpose renew echo before correct rate artist seed net" -a 50
 
 /* Command Prompt 2 */
+
 `cd "C:\Code\ethereum-bridge"
 node bridge -a 49`
 
 /* Command Prompt 3 - Windows */
+
 `cd "C:\Code\vDice"
 SET PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JSE;.WSF;.WSH;.MSC
 truffle compile / migrate / test ...`
 
 /* Command Prompt 3 - MacOS */
+
 `cd "C:\Code\vDice"
 truffle compile / migrate / test ...`
