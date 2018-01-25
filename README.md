@@ -15,20 +15,17 @@ testrpc --mnemonic "case meadow shuffle purpose renew echo before correct rate a
 
 /* Command Prompt 2 */
 
-`cd "C:\Code\ethereum-bridge"
-
-node bridge -a 49`
+`cd "C:\Code\ethereum-bridge"`
+`node bridge -a 49`
 
 /* Command Prompt 3 - Windows */
 
-`cd "C:\Code\vDice"
-
-SET PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JSE;.WSF;.WSH;.MSC
+`cd "C:\Code\vDice"`
+`SET PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JSE;.WSF;.WSH;.MSC`
 
 truffle compile / migrate / test ...`
 
 /* Command Prompt 3 - MacOS */
 
-`cd "C:\Code\vDice"
-
-truffle compile / migrate / test ...`
+`cd "C:\Code\vDice"`
+`truffle compile / migrate / test ...`
