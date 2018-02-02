@@ -16,18 +16,19 @@ contract('Dice', function(accounts) {
       // Contract details
       //console.log(instance);
       
-      console.log("Account 0 Balance: " + web3.eth.getBalance(accounts[0]));
-      console.log("Account 1 Balance: " + web3.eth.getBalance(accounts[1]));
-      console.log("Account 2 Balance: " + web3.eth.getBalance(accounts[2]));
-      console.log("Account 49 Balance: " + web3.eth.getBalance(accounts[49]));
+      // console.log("Account 0 Balance: " + web3.eth.getBalance(accounts[0]));
+      // console.log("Account 1 Balance: " + web3.eth.getBalance(accounts[1]));
+      // console.log("Account 2 Balance: " + web3.eth.getBalance(accounts[2]));
+      // console.log("Account 49 Balance: " + web3.eth.getBalance(accounts[49]));
       //instance.deposit(myData, {value: 100, from: myAccount});
-      instance.newInvestor({value: 100, from: accounts[1]}).then(function() {
-        console.log("Created new investor" + value);
-        instance.getMaxBetAmount.call().then(function(value){
-          console.log("Max Bet Amount:" + value);
-        });  
-      });
-      return null;
+      return instance.newInvestor({value: 100, from: accounts[1]});
+    })
+    .then(function(value) {
+        console.log("Created new investor");
+        console.log(value);
+        // return instance.getMaxBetAmount.call().then(function(value){
+        //   console.log("Max Bet Amount:" + value);
+        // });  
     }).then(function(value) {
       //assert.equal(value.valueOf(), 10000, "10000 wasn't in the first account");
     });

@@ -73,7 +73,7 @@ contract Dice is usingOraclize {
         uint divestFeeInitial,
         uint emergencyWithdrawalRatioInitial) {
 
-        OAR = OraclizeAddrResolverI(0xDd506A9a6F420d27875dEa56B0830c3F01904ff9);
+        OAR = OraclizeAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);
         oraclize_setProof(proofType_TLSNotary | proofStorage_IPFS);
 
         pwin = pwinInitial;
@@ -379,7 +379,8 @@ contract Dice is usingOraclize {
         onlyIfNotStopped
         onlyMoreThanZero
         onlyNotInvestors
-        onlyMoreThanMinInvestment {
+        onlyMoreThanMinInvestment 
+        payable {
 
         profitDistribution();
 
