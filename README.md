@@ -18,7 +18,7 @@ The commands below will help you launch it. You need to have multiple services r
 
 `cd "C:\Code\ethereum-bridge"`
 
-`node bridge -a 49`
+`node bridge -a 49 --account 0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475`
 
 /* Command Prompt 3 - Windows */
 
